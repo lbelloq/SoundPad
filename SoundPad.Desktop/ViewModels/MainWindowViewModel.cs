@@ -1,50 +1,71 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using CommunityToolkit.Mvvm.Input;
-using LibVLCSharp.Shared;
+using SoundFlow.Abstracts.Devices;
+using SoundFlow.Backends.MiniAudio;
+using SoundFlow.Components;
+using SoundFlow.Providers;
+using SoundFlow.Structs;
 
 namespace SoundPad.Desktop.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase, IDisposable
 {
-    private readonly LibVLC _libvlc;
-    private readonly MediaPlayer _mediaPlayer;
+    private static readonly AudioFormat _FORMAT = AudioFormat.DvdHq;
     
-    private Media? _media;
-    private MemoryStream? _stream;
-    private StreamMediaInput? _input;
+    private readonly MiniAudioEngine _engine;
+    private readonly AudioPlaybackDevice _device;
+
+    private Stream? _stream;
+    private StreamDataProvider? _provider;
+    private SoundPlayer? _player;
     
     public MainWindowViewModel()
     {
-        Core.Initialize();
-        _libvlc = new LibVLC();
-        _mediaPlayer = new MediaPlayer(_libvlc);
-        _media = null;
-        _stream = null;
-        _input = null;
+        _engine = new MiniAudioEngine();
+        _engine.UpdateAudioDevicesInfo();
+        var defaultDevice = _engine.PlaybackDevices.FirstOrDefault(x => x.IsDefault);
+        _device = _engine.InitializePlaybackDevice(defaultDevice, _FORMAT);
     }
 
     [RelayCommand]
     private void Play()
     {
-        _stream = new MemoryStream(Sounds.Assassin);
-        _input = new StreamMediaInput(_stream);
-        var media = new Media(_libvlc, _input, ":no-video");
-        _mediaPlayer.Play(media);
+        var assembly = Assembly.GetExecutingAssembly();
+        _stream = assembly.GetManifestResourceStream("SoundPad.Desktop.Resources.biggamehunter.wav")!;
+        _provider = new StreamDataProvider(_engine, _FORMAT, _stream);
+        _player = new SoundPlayer(_engine, _FORMAT, _provider);
+        _device.MasterMixer.AddComponent(_player);
+        _device.Start();
+        _player.Play();
     }
 
     [RelayCommand]
     private void Stop()
     {
-        _mediaPlayer?.Stop();
-        _media?.Dispose();
-        _input?.Dispose();
+        if (_player != null)
+        {
+            _player.Stop();
+            _device.MasterMixer.RemoveComponent(_player);
+            _player.Dispose();
+            _player = null;
+        }
+        _provider?.Dispose();
+        _provider = null;
         _stream?.Dispose();
+        _stream = null;
     }
     
     public void Dispose()
     {
-        _mediaPlayer.Dispose();
-        _libvlc.Dispose();
+        if (_player != null)
+        {
+            Stop();
+        }
+        _device.Stop();
+        _device.Dispose();
+        _engine.Dispose();
     }
 }
