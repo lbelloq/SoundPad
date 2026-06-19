@@ -7,4 +7,6 @@ public class PadButton
 {
     public Guid Id { get; set; }
     public FileInfo? File { get; set; }
+    
+    public string DisplayText => File?.Name ?? "Unassigned";
 }

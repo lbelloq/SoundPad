@@ -37,9 +37,9 @@ public partial class MainWindowViewModel : ViewModelBase, IDisposable
     }
 
     [RelayCommand]
-    private void Play()
+    private void Play(PadButton elem)
     {
-        _audioService.Play();
+        _audioService.Play(elem.File);
     }
 
     [RelayCommand]

@@ -1,6 +1,7 @@
+using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using Avalonia.Controls;
 using SoundFlow.Abstracts.Devices;
 using SoundFlow.Backends.MiniAudio;
 using SoundFlow.Components;
@@ -42,12 +43,15 @@ public sealed class AudioService : IDisposable
         _stream = null;
     }
 
-    public void Play()
+    public void Play(FileInfo? file)
     {
+        if (file is null || !file.Exists)
+        {
+            return;
+        }
         DisposeTransientResources();
 
-        var assembly = Assembly.GetExecutingAssembly();
-        _stream = assembly.GetManifestResourceStream("SoundPad.Desktop.Resources.biggamehunter.wav");
+        _stream = file.OpenRead();
         if (_stream == null)
         {
             throw new InvalidOperationException("Embedded resource not found.");
