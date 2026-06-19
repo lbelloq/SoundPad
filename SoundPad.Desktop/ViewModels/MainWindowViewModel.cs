@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SoundPad.Desktop.Models;
@@ -17,6 +19,21 @@ public partial class MainWindowViewModel : ViewModelBase, IDisposable
     public MainWindowViewModel()
     {
         _audioService = new AudioService();
+        
+        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "Wave (HL compatible)");
+        Buttons = new ObservableCollection<PadButton>(
+            Directory.GetFiles(folder, "*.wav")
+                .OrderBy(f => Path.GetFileNameWithoutExtension(f))
+                .Select(f => new PadButton { Id = Guid.NewGuid(), File = new FileInfo(f) })
+        );
+        if (Buttons.Count < 64)
+        {
+            var remaining = 64 - Buttons.Count;
+            for (var i = 0; i < remaining; i++)
+            {
+                Buttons.Add(new PadButton { Id = Guid.NewGuid(), File = null });
+            }
+        }
     }
 
     [RelayCommand]
