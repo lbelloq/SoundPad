@@ -7,7 +7,8 @@
         x:Class="SoundPad.Desktop.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SoundPad.Desktop">
+        Title="SoundPad.Desktop"
+        MinWidth="1024" MinHeight="1024">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,9 +16,73 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel Orientation="Horizontal" Spacing="8">
-        <Button Content="Play" Command="{Binding PlayCommand}" />
-        <Button Content="Stop" Command="{Binding StopCommand}" />
-    </StackPanel>
+    <Border Margin="8">
+        <UniformGrid Rows="8" Columns="8" ColumnSpacing="8" RowSpacing="8">
+            <Button Content="Button 1" Classes="pad" />
+            <Button Content="Button 2" Classes="pad" />
+            <Button Content="Button 3" Classes="pad" />
+            <Button Content="Button 4" Classes="pad" />
+            <Button Content="Button 5" Classes="pad" />
+            <Button Content="Button 6" Classes="pad" />
+            <Button Content="Button 7" Classes="pad" />
+            <Button Content="Button 8" Classes="pad" />
+            <Button Content="Button 9" Classes="pad" />
+            <Button Content="Button 10" Classes="pad" />
+            <Button Content="Button 11" Classes="pad" />
+            <Button Content="Button 12" Classes="pad" />
+            <Button Content="Button 13" Classes="pad" />
+            <Button Content="Button 14" Classes="pad" />
+            <Button Content="Button 15" Classes="pad" />
+            <Button Content="Button 16" Classes="pad" />
+            <Button Content="Button 17" Classes="pad" />
+            <Button Content="Button 18" Classes="pad" />
+            <Button Content="Button 19" Classes="pad" />
+            <Button Content="Button 20" Classes="pad" />
+            <Button Content="Button 21" Classes="pad" />
+            <Button Content="Button 22" Classes="pad" />
+            <Button Content="Button 23" Classes="pad" />
+            <Button Content="Button 24" Classes="pad" />
+            <Button Content="Button 25" Classes="pad" />
+            <Button Content="Button 26" Classes="pad" />
+            <Button Content="Button 27" Classes="pad" />
+            <Button Content="Button 28" Classes="pad" />
+            <Button Content="Button 29" Classes="pad" />
+            <Button Content="Button 30" Classes="pad" />
+            <Button Content="Button 31" Classes="pad" />
+            <Button Content="Button 32" Classes="pad" />
+            <Button Content="Button 33" Classes="pad" />
+            <Button Content="Button 34" Classes="pad" />
+            <Button Content="Button 35" Classes="pad" />
+            <Button Content="Button 36" Classes="pad" />
+            <Button Content="Button 37" Classes="pad" />
+            <Button Content="Button 38" Classes="pad" />
+            <Button Content="Button 39" Classes="pad" />
+            <Button Content="Button 40" Classes="pad" />
+            <Button Content="Button 41" Classes="pad" />
+            <Button Content="Button 42" Classes="pad" />
+            <Button Content="Button 43" Classes="pad" />
+            <Button Content="Button 44" Classes="pad" />
+            <Button Content="Button 45" Classes="pad" />
+            <Button Content="Button 46" Classes="pad" />
+            <Button Content="Button 47" Classes="pad" />
+            <Button Content="Button 48" Classes="pad" />
+            <Button Content="Button 49" Classes="pad" />
+            <Button Content="Button 50" Classes="pad" />
+            <Button Content="Button 51" Classes="pad" />
+            <Button Content="Button 52" Classes="pad" />
+            <Button Content="Button 53" Classes="pad" />
+            <Button Content="Button 54" Classes="pad" />
+            <Button Content="Button 55" Classes="pad" />
+            <Button Content="Button 56" Classes="pad" />
+            <Button Content="Button 57" Classes="pad" />
+            <Button Content="Button 58" Classes="pad" />
+            <Button Content="Button 59" Classes="pad" />
+            <Button Content="Button 60" Classes="pad" />
+            <Button Content="Button 61" Classes="pad" />
+            <Button Content="Button 62" Classes="pad" />
+            <Button Content="Button 63" Classes="pad" />
+            <Button Content="Button 64" Classes="pad" />
+        </UniformGrid>
+    </Border>
 
 </Window>

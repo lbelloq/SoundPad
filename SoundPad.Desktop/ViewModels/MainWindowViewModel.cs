@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SoundFlow.Abstracts.Devices;
 using SoundFlow.Backends.MiniAudio;
 using SoundFlow.Components;
 using SoundFlow.Providers;
 using SoundFlow.Structs;
+using SoundPad.Desktop.Models;
 
 namespace SoundPad.Desktop.ViewModels;
 
@@ -22,6 +26,9 @@ public partial class MainWindowViewModel : ViewModelBase, IDisposable
     private Stream? _stream;
     private StreamDataProvider? _provider;
     private SoundPlayer? _player;
+
+    [ObservableProperty] 
+    private ObservableCollection<PadButton> _buttons;
     
     public MainWindowViewModel()
     {
