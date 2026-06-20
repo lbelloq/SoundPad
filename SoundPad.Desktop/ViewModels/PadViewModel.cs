@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -9,14 +9,14 @@ using SoundPad.Desktop.Services;
 
 namespace SoundPad.Desktop.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase, IDisposable
+public partial class PadViewModel : ViewModelBase, IDisposable
 {
     private readonly AudioService _audioService;
 
     [ObservableProperty] 
     private ObservableCollection<PadButton> _buttons;
 
-    public MainWindowViewModel()
+    public PadViewModel()
     {
         _audioService = new AudioService();
         
