@@ -22,7 +22,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new PadViewModel(),
+                DataContext = new MainViewModel(),
             };
         }
 

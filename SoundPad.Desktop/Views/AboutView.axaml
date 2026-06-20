@@ -1,0 +1,6 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="using:SoundPad.Desktop.Views"
+             x:Class="SoundPad.Desktop.Views.AboutView">
+    <TextBlock Text="About view selected" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+</UserControl>

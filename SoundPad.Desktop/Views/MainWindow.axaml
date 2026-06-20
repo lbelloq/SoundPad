@@ -3,17 +3,44 @@
         xmlns:vm="using:SoundPad.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="using:SoundPad.Desktop.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SoundPad.Desktop.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="SoundPad.Desktop"
-        MinWidth="1024" MinHeight="1024">
+        MinWidth="1124" MinHeight="1024">
 
     <Design.DataContext>
-        <vm:PadViewModel/>
+        <vm:MainViewModel/>
     </Design.DataContext>
 
-    <views:PadView/>
+    <SplitView PanePlacement="Left" DisplayMode="CompactInline" IsPaneOpen="True" OpenPaneLength="200">
+        <SplitView.Pane>
+            <StackPanel Orientation="Vertical" Spacing="8">
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Soundpad" Command="{Binding SelectViewCommand}" CommandParameter="0" />
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Settings" Command="{Binding SelectViewCommand}" CommandParameter="1" />
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="About" Command="{Binding SelectViewCommand}" CommandParameter="2" />
+            </StackPanel>
+        </SplitView.Pane>
+        <ContentControl Content="{Binding SelectedContent}" />
+    </SplitView>
+    <!-- <Panel> -->
+    <!--     <ListBox Width="200" Background="#1e1e1e" Foreground="White" -->
+    <!--              ItemsSource="['Soundpad', 'Settings', 'About']" -->
+    <!--              SelectedIndex="{Binding SelectedTabIndex}" -->
+    <!--              Padding="16,8" FontSize="14"> -->
+    <!--         <ListBox.ItemContainerStyle> -->
+    <!--             <Style Selector="ListBoxItem"> -->
+    <!--                 <Setter Property="Background" Value="Transparent"/> -->
+    <!--                 <Setter Property="Padding" Value="16,8"/> -->
+    <!--             </Style> -->
+    <!--             <Style Selector="ListBoxItem:selected"> -->
+    <!--                 <Setter Property="Background" Value="#3a3a3a"/> -->
+    <!--             </Style> -->
+    <!--         </ListBox.ItemContainerStyle> -->
+    <!--     </ListBox> -->
+    <!--      -->
+    <!--      -->
+    <!-- </Panel> -->
 
 </Window>
