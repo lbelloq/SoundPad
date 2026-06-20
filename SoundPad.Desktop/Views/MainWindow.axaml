@@ -16,11 +16,11 @@
 
     <SplitView PanePlacement="Left" DisplayMode="CompactInline" IsPaneOpen="True" OpenPaneLength="200">
         <SplitView.Pane>
-            <StackPanel Orientation="Vertical" Spacing="8">
-                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Soundpad" Command="{Binding SelectViewCommand}" CommandParameter="0" />
-                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Settings" Command="{Binding SelectViewCommand}" CommandParameter="1" />
-                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="About" Command="{Binding SelectViewCommand}" CommandParameter="2" />
-            </StackPanel>
+            <Grid RowDefinitions="Auto, Auto, Auto, *" RowSpacing="8">
+                <Button Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Soundpad" Command="{Binding SelectViewCommand}" CommandParameter="0" />
+                <Button Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Settings" Command="{Binding SelectViewCommand}" CommandParameter="1" />
+                <Button Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="About" Command="{Binding SelectViewCommand}" CommandParameter="2" />
+            </Grid>
         </SplitView.Pane>
         <ContentControl Content="{Binding SelectedContent}" />
     </SplitView>

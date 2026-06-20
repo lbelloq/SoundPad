@@ -14,14 +14,18 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void SelectView(int view)
+    private void SelectView(object? view)
     {
-        SelectedContent = view switch
+        if (view is string a && int.TryParse(a, out var b))
         {
-            0 => new PadViewModel(),
-            1 => new SettingsViewModel(),
-            2 => new AboutViewModel(),
-            _ => SelectedContent
-        };
+            SelectedContent = b switch
+            {
+                0 => new PadViewModel(),
+                1 => new SettingsViewModel(),
+                2 => new AboutViewModel(),
+                _ => SelectedContent
+            };
+        }
+        
     }
 }
