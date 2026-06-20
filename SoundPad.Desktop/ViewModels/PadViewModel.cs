@@ -19,7 +19,7 @@ public partial class PadViewModel : ViewModelBase, IDisposable
     {
         _audioService = new AudioService();
         _buttonsService = new PadButtonsService();
-        Buttons = new(_buttonsService.GenerateButtons());
+        Buttons = new(_buttonsService.GetButtons());
     }
 
     [RelayCommand]

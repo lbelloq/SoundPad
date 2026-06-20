@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using SoundPad.Desktop.Models;
@@ -10,14 +9,14 @@ namespace SoundPad.Desktop.Services;
 public class PadButtonsService
 {
     private const int _TOTAL_PAD_COUNT = 64;
-    private const string PadFolderName = "Wave (HL compatible)";
+    private const string _PAD_FOLDER_NAME = "Wave (HL compatible)";
 
-    public List<PadButton> GenerateButtons(string? folderPath = null)
+    public List<PadButton> GetButtons()
     {
-        folderPath ??= GetDefaultFolder();
+        var folder_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", _PAD_FOLDER_NAME);
 
         var buttons = Directory
-            .GetFiles(folderPath, "*.wav")
+            .GetFiles(folder_path, "*.wav")
             .OrderBy(f => Path.GetFileNameWithoutExtension(f))
             .Select(f => new PadButton { Id = Guid.NewGuid(), File = new FileInfo(f) })
             .ToList();
@@ -28,14 +27,5 @@ public class PadButtonsService
         }
 
         return buttons;
-    }
-
-    private static string GetDefaultFolder()
-    {
-        return Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            "Downloads",
-            PadFolderName
-        );
     }
 }
