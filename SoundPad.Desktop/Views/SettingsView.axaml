@@ -1,3 +1,37 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="SoundPad.Desktop.Views.SettingsView"/>
+             xmlns:vm="clr-namespace:SoundPad.Desktop.ViewModels"
+             xmlns:models="clr-namespace:SoundPad.Desktop.Models"
+             x:Class="SoundPad.Desktop.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+    
+    <Border Classes="view">
+        <StackPanel Orientation="Vertical" Spacing="8">
+            <TextBlock Text="Select output device" />
+            <TextBlock Text="OUTPUT_DEVICE" />
+            <TextBlock Text="Sounds configuration" />
+            <ItemsControl ItemsSource="{Binding Buttons}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:PadButton">
+                        <Border Margin="8">
+                            <StackPanel Orientation="Vertical" Spacing="8">
+                                <TextBlock Text="{Binding ButtonId, StringFormat='Button {0}'}" />
+                                <TextBlock Text="{Binding Path}" TextWrapping="Wrap" />
+                                <Button Content="Choose sound..." Command="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).PickFileCommand}" CommandParameter="{Binding}" />
+                                <Button Content="Unassign" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <UniformGrid Rows="8" Columns="8" ColumnSpacing="8" RowSpacing="8"/>
+                        </ScrollViewer>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+    </Border>
+
+</UserControl>

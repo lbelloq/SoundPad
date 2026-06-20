@@ -12,11 +12,11 @@
         <vm:PadViewModel/>
     </Design.DataContext>
 
-    <Border Margin="8">
+    <Border Classes="view">
         <ItemsControl ItemsSource="{Binding Buttons}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:PadButton">
-                    <Button Content="{Binding DisplayText}" Classes="pad" Command="{Binding $parent[UserControl].((vm:PadViewModel)DataContext).PlayCommand }" CommandParameter="{Binding}" />
+                    <Button Content="{Binding}" Classes="pad" Command="{Binding $parent[UserControl].((vm:PadViewModel)DataContext).PlayCommand }" CommandParameter="{Binding}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>

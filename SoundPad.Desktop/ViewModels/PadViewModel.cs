@@ -25,7 +25,7 @@ public partial class PadViewModel : ViewModelBase, IDisposable
     [RelayCommand]
     private void Play(PadButton elem)
     {
-        _audioService.Play(elem.File);
+        _audioService.Play(elem.Path);
     }
 
     [RelayCommand]

@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using SoundFlow.Abstracts.Devices;
 using SoundFlow.Backends.MiniAudio;
 using SoundFlow.Components;
@@ -43,15 +42,15 @@ public sealed class AudioService : IDisposable
         _stream = null;
     }
 
-    public void Play(FileInfo? file)
+    public void Play(string? file)
     {
-        if (file is null || !file.Exists)
+        if (file is null || !File.Exists(file))
         {
             return;
         }
         DisposeTransientResources();
 
-        _stream = file.OpenRead();
+        _stream = File.OpenRead(file);
         if (_stream == null)
         {
             throw new InvalidOperationException("Embedded resource not found.");
