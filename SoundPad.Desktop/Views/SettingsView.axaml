@@ -6,32 +6,32 @@
              x:DataType="vm:SettingsViewModel">
     
     <Border Classes="view">
-        <StackPanel Orientation="Vertical" Spacing="8">
-            <TextBlock Text="Select output device" />
-            <TextBlock Text="OUTPUT_DEVICE" />
-            <TextBlock Text="Sounds configuration" />
-            <ItemsControl ItemsSource="{Binding Buttons}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="models:PadButton">
-                        <Border Margin="8">
-                            <StackPanel Orientation="Vertical" Spacing="8">
-                                <TextBlock Text="{Binding ButtonId, StringFormat='Button {0}'}" />
-                                <TextBlock Text="{Binding Path}" TextWrapping="Wrap" />
-                                <Button Content="Choose sound..." Command="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).PickFileCommand}" CommandParameter="{Binding}" />
-                                <Button Content="Unassign" />
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid RowDefinitions="Auto, Auto, Auto, *" RowSpacing="8">
+            <TextBlock Grid.Row="0" Text="Select output device" />
+            <TextBlock Grid.Row="1" Text="OUTPUT_DEVICE" />
+            <TextBlock Grid.Row="2" Text="Sounds configuration" />
+            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Buttons}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:PadButton">
+                            <Border Margin="8">
+                                <StackPanel Orientation="Vertical" Spacing="8">
+                                    <TextBlock Text="{Binding ButtonId, StringFormat='Button {0}'}" />
+                                    <TextBlock Text="{Binding PathString}" TextWrapping="Wrap" />
+                                    <Button Content="Choose sound..." Command="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).PickFileCommand}" CommandParameter="{Binding}" />
+                                    <Button Content="Unassign" Command="{Binding $parent[UserControl].((vm:SettingsViewModel)DataContext).UnassignCommand}" CommandParameter="{Binding}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
                             <UniformGrid Rows="8" Columns="8" ColumnSpacing="8" RowSpacing="8"/>
-                        </ScrollViewer>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </StackPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Border>
 
 </UserControl>

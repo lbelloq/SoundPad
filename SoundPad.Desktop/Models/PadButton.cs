@@ -1,19 +1,18 @@
 using System;
 using System.IO;
 using System.Text.Json.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace SoundPad.Desktop.Models;
 
-public class PadButton
+public partial class PadButton : ObservableObject
 {
     public int ButtonId { get; set; }
-    
-    public string? Path { get; set; }
-    
-    public override string ToString()
-    {
-        return Path is null ?
-            "Unassigned":
-            System.IO.Path.GetFileName(Path);
-    }
+
+    [ObservableProperty] 
+    public partial string? Path { get; set; }
+
+    public string PathString => Path ?? "Unassigned";
+
+    public override string ToString() => Path is null ? "Unassigned" : System.IO.Path.GetFileName(Path);
 }

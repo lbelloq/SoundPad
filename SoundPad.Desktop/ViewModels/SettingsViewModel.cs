@@ -51,6 +51,12 @@ public partial class SettingsViewModel : ViewModelBase
         {
             return;
         }
-        elem.Path = new FileInfo(file[0].Path.AbsolutePath).FullName;
+        elem.Path = new FileInfo(file[0].Path.LocalPath).FullName;
+    }
+    
+    [RelayCommand]
+    private void Unassign(PadButton elem)
+    {
+        elem.Path = null;
     }
 }
