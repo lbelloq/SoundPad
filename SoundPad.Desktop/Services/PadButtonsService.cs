@@ -10,7 +10,6 @@ namespace SoundPad.Desktop.Services;
 public class PadButtonsService
 {
     private const int _TOTAL_PAD_COUNT = 64;
-    private const string _PAD_FOLDER_NAME = "Wave (HL compatible)";
     private const string _CONFIG_FOLDER = "SoundPad";
     private const string _CONFIG_FILE = "buttons.json";
 
@@ -21,29 +20,46 @@ public class PadButtonsService
 
     public List<PadButton> GetButtons()
     {
-        var folder_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", _PAD_FOLDER_NAME);
+        EnsureConfigDirectoryExists();
+        var config_file = Path.Combine(GetConfigDirectory(), _CONFIG_FILE);
 
-        var idx = 0;
-        var buttons = Directory
-            .GetFiles(folder_path, "*.wav")
-            .OrderBy(f => Path.GetFileNameWithoutExtension(f))
-            .Select(f => new PadButton { ButtonId = ++idx, Path = f })
-            .ToList();
-
-        while (buttons.Count < _TOTAL_PAD_COUNT)
+        List<PadButton> buttons;
+        if (!File.Exists(config_file))
         {
-            buttons.Add(new PadButton { ButtonId = ++idx, Path = null });
+            buttons = [];
         }
-
+        else
+        {
+            buttons = JsonSerializer.Deserialize<List<PadButton>>(File.ReadAllText(config_file), _JSON_OPTIONS)?.OrderBy(p=>p.ButtonId).ToList() ?? [];
+        }
+        if (buttons.Count < 64)
+        {
+            var idx = buttons.Count;
+            while (buttons.Count < _TOTAL_PAD_COUNT)
+            {
+                buttons.Add(new PadButton { ButtonId = ++idx, Path = null });
+            }
+        }
         return buttons;
     }
 
     public void SaveButtonConfig(List<PadButton> buttons)
     {
-        var config_folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), _CONFIG_FOLDER);
-        _ = Directory.CreateDirectory(config_folder);
+        EnsureConfigDirectoryExists();
         var json = JsonSerializer.Serialize(buttons, _JSON_OPTIONS);
-        var config_path = Path.Combine(config_folder, _CONFIG_FILE);
+        var config_path = Path.Combine(GetConfigDirectory(), _CONFIG_FILE);
         File.WriteAllText(config_path, json);
+    }
+
+    private static string GetConfigDirectory() =>
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), _CONFIG_FOLDER);
+
+    private static void EnsureConfigDirectoryExists()
+    {
+        var config_dir = GetConfigDirectory();
+        if (!Directory.Exists(config_dir))
+        {
+            _ = Directory.CreateDirectory(config_dir);
+        }
     }
 }

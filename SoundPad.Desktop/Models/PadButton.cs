@@ -21,6 +21,7 @@ public class PadButton : ObservableObject
         }
     }
 
+    [JsonIgnore]
     public string PathString => Path ?? "Unassigned";
 
     public override string ToString() => Path is null ? "Unassigned" : System.IO.Path.GetFileName(Path);

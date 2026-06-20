@@ -52,11 +52,18 @@ public partial class SettingsViewModel : ViewModelBase
             return;
         }
         elem.Path = new FileInfo(file[0].Path.LocalPath).FullName;
+        SavePadButtons();
     }
     
     [RelayCommand]
     private void Unassign(PadButton elem)
     {
         elem.Path = null;
+        SavePadButtons();
+    }
+
+    private void SavePadButtons()
+    {
+        _buttonsService.SaveButtonConfig(Buttons.ToList());
     }
 }
